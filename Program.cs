@@ -13,7 +13,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //builder.Services.AddDbContext<TodoListDb>(options=>options.UseNpgsql(connectionString));
 builder.Services.AddDbContext<TodoListDb>(options=>options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-//5432
 
 var app = builder.Build();
 
@@ -23,7 +22,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.MapGet("/listitems", async(TodoListDb context) =>
 {
