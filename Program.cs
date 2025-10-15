@@ -5,11 +5,15 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 DotNetEnv.Env.Load();
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+builder.WebHost.UseUrls($"http://*:{port}");
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //builder.Services.AddDbContext<TodoListDb>(options=>options.UseNpgsql(connectionString));
 builder.Services.AddDbContext<TodoListDb>(options=>options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+//5432
 
 var app = builder.Build();
 
