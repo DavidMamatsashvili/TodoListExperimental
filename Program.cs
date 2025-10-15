@@ -6,18 +6,10 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 DotNetEnv.Env.Load();
 
-var host = Environment.GetEnvironmentVariable("DB_HOST");
-var port = Environment.GetEnvironmentVariable("DB_PORT");
-var dbName = Environment.GetEnvironmentVariable("DB_NAME");
-var user = Environment.GetEnvironmentVariable("DB_USER");
-var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
-
-var connectionString = $"Host={host};Port={port};Database={dbName};Username={user};Password={password}";
-
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<TodoListDb>(options=>options.UseNpgsql(connectionString));
+//builder.Services.AddDbContext<TodoListDb>(options=>options.UseNpgsql(connectionString));
+builder.Services.AddDbContext<TodoListDb>(options=>options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
