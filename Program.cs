@@ -16,7 +16,7 @@ builder.Services.AddDbContext<TodoListDb>(options=>options.UseNpgsql(builder.Con
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || true)
 {
     app.UseSwagger();
     app.UseSwaggerUI();
