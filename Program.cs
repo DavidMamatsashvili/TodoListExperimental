@@ -70,7 +70,7 @@ app.MapPost("listitems/newitem",async(TodoListDb context, ListItemDto item)=>{
     };
     context.Add(newitem);
     await context.SaveChangesAsync();
-    return Results.Created("listitems/{item.Id}",newitem);    
+    return Results.Created("listitems/{newitem.Id}",newitem);    
 });
 
 app.MapDelete("listitems/{id}",async(TodoListDb context, int id)=>{
