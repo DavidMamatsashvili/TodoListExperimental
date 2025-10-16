@@ -8,6 +8,16 @@ DotNetEnv.Env.Load();
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
 builder.WebHost.UseUrls($"http://*:{port}");
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -16,11 +26,15 @@ builder.Services.AddDbContext<TodoListDb>(options=>options.UseNpgsql(builder.Con
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment() || true)
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment() || true)
+//{
+   // app.UseSwagger();
+   // app.UseSwaggerUI();
+//}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+app.UseCors("AllowAll");
 
 //app.UseHttpsRedirection();
 
