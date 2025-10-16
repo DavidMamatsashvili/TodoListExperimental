@@ -62,9 +62,15 @@ app.MapPut("listitems/{id}",async(TodoListDb context, int id, ListItemDto item)=
 
 app.MapPost("listitems/newitem",async(TodoListDb context, ListItemDto item)=>{
     if(item==null) return Results.NotFound();
-    context.Add(item);
+    ListItem newitem = new ListItem(){
+        Title=item.Title,
+        Content=item.Content,
+        Date=item.Date,
+        Author=item.Author
+    };
+    context.Add(newitem);
     await context.SaveChangesAsync();
-    return Results.Created("listitems/{item.Id}",item);    
+    return Results.Created("listitems/{item.Id}",newitem);    
 });
 
 app.MapDelete("listitems/{id}",async(TodoListDb context, int id)=>{
